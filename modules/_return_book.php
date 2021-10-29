@@ -6,7 +6,7 @@ function return_book($conn, int $member_id, int $book_id, $remark)
     $sql = "SELECT date FROM issue WHERE member_id=$member_id AND book_id=$book_id;";
     $result = mysqli_query($conn, $sql);
     // Checking whether the book is issued or not
-    if (mysqli_num_rows($result) != 0) {
+    if ($result and mysqli_num_rows($result) != 0) {
         $issue_date = mysqli_fetch_assoc($result)['date'];
 
         // Adding to transaction_history table

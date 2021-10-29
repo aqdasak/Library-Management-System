@@ -6,7 +6,7 @@ function add_book($conn, String $book_name, String $author, String $description,
     // Get category_id
     $sql = "SELECT category_id FROM category WHERE category_name='$category'";
     $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) != 0) {
+    if ($result and mysqli_num_rows($result) != 0) {
         $category_id = mysqli_fetch_assoc($result)['category_id'];
     } else {
         $category_id = NULL;

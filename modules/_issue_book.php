@@ -22,7 +22,7 @@ function issue_book($conn, int $member_id, int $book_id)
             // Checking if the book is already issued
             $sql = "SELECT * FROM issue WHERE member_id=$member_id AND book_id=$book_id;";
             $result = mysqli_query($conn, $sql);
-            if (mysqli_num_rows($result) != 0) {
+            if ($result and mysqli_num_rows($result) != 0) {
                 echoln('You have already issued this book');
             }
         }

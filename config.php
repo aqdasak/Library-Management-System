@@ -1,6 +1,10 @@
 <?php
+session_start();
+$_SESSION['member_id'] = 1;
+
+
 $config = array(
-    'debug' => true,
+    'debug' => false,
     'Db' => array(
         'servername' => 'localhost',
         'username' => 'root',
