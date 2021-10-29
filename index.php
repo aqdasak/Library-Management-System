@@ -14,7 +14,7 @@
 
 <body>
 
-    <?php require 'partials/_navbar.php' ?>
+    <?php require 'partials/_navbar.html' ?>
 
     <h1>Hello, world!</h1>
 
