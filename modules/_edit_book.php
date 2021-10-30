@@ -1,5 +1,5 @@
 <?php
-require 'sql.php';
+require __DIR__ . '/_sql.php';
 
 function edit_book($conn, int $book_id, String $book_name, String $author, String $description, int $category_id, int $total_books, int $available_books)
 {
@@ -7,9 +7,11 @@ function edit_book($conn, int $book_id, String $book_name, String $author, Strin
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
-        echoln('Successful');
+        // Successful
+        return true;
     } else {
-        echoln('Some error occured');
+        // Some error occured
+        return false;
     }
 }
 
