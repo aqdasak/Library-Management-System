@@ -1,5 +1,5 @@
 <?php
-function verify_user($conn, int $member_id)
+function verify_user($conn, $member_id)
 {
     $sql = "UPDATE member SET `verified`='1' WHERE member_id='$member_id'";
     $result = mysqli_query($conn, $sql);

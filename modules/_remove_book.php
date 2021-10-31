@@ -1,8 +1,9 @@
 <?php
-require 'sql.php';
 
-function remove_book($conn, String $book_id)
+function remove_book($conn, $book_id)
 {
+    require_once __DIR__ . '/_sql.php';
+
     $sql = "DELETE FROM issue WHERE book_id='$book_id'";
     $result = mysqli_query($conn, $sql);
 
@@ -13,11 +14,13 @@ function remove_book($conn, String $book_id)
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
-        echoln('Book removed');
+        // Book removed
+        return true;
     } else {
-        echoln('Some error occured');
+        // Some error occured
+        return false;
     }
 }
 
-// require 'dbconnect.php';
+// require_once 'dbconnect.php';
 // remove_book($conn, 4);

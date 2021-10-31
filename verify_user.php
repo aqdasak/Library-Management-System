@@ -1,9 +1,13 @@
 <?php
-require __DIR__ . '/modules/_verify_user.php';
-require __DIR__ . '/modules/_dbconnect.php';
+require_once __DIR__ . '/modules/_verify_user.php';
+require_once __DIR__ . '/modules/_dbconnect.php';
+require_once __DIR__ . '/modules/_alert.php';
+
 $result = verify_user($conn, $_GET['mid']);
 if ($result) {
-    header('location: admin_dashboard.php?alert=User verified&alert_type=success');
+    create_alert('User verified', 'success');
+    header('location: admin_dashboard.php');
 } else {
-    header('location: admin_dashboard.php?alert=Some error occured&alert_type=danger');
+    create_alert('Some error occured', 'danger');
+    header('location: admin_dashboard.php');
 }

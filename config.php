@@ -14,12 +14,13 @@ $config = array(
         'db_name' => 'lib_man_sys'
     ),
     'library' => array(
-        'return_in_days' => 7
-    )
+        'return_in_days' => 7,
+        'fine_per_day' => 5,
+    ),
 );
 
-function echoln($arg)
-{
-    echo $arg;
-    echo '<br>';
-}
+// function echoln($arg)
+// {
+//     echo $arg;
+//     echo '<br>';
+// }

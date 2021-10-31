@@ -1,8 +1,8 @@
 <?php
-require __DIR__ . '/_sql.php';
-require __DIR__ . '/_category.php';
+require_once __DIR__ . '/_sql.php';
+require_once __DIR__ . '/_category.php';
 
-function add_book($conn, String $book_name, String $author, String $description, String $category, int $no_of_books)
+function add_book($conn, $book_name,  $author, $description, $category, $no_of_books)
 {
     // Get category_id
     $sql = "SELECT category_id FROM category WHERE category_name='$category'";
@@ -32,5 +32,5 @@ function add_book($conn, String $book_name, String $author, String $description,
     }
 }
 
-// require 'dbconnect.php';
+// require_once 'dbconnect.php';
 // add_book($conn, 'Rust', 'Aqdas', 'ternhn4h ulthhpn4', 'c', 70);

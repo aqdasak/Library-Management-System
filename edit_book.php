@@ -1,7 +1,9 @@
 <?php
-require __DIR__ . '/modules/_dbconnect.php';
-require __DIR__ . '/modules/_edit_book.php';
-require __DIR__ . '/modules/_category.php';
+require_once __DIR__ . '/modules/_dbconnect.php';
+require_once __DIR__ . '/modules/_edit_book.php';
+require_once __DIR__ . '/modules/_category.php';
+require_once __DIR__ . '/modules/_url.php';
+require_once __DIR__ . '/modules/_alert.php';
 ?>
 
 <!doctype html>
@@ -20,13 +22,13 @@ require __DIR__ . '/modules/_category.php';
 
 <body>
 
-    <?php require 'partials/_navbar.html' ?>
+    <?php require_once 'partials/_navbar.html' ?>
 
     <?php
     // POST REQUEST
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $category_id = get_category_id($conn, $_POST['category']);
-        if ($category_id == NULL) {
+        if ($category_id === NULL) {
             $category_id = add_category($conn, $_POST['category']);
         }
 
@@ -38,31 +40,50 @@ require __DIR__ . '/modules/_category.php';
         }
 
         $result = edit_book($conn, $_POST['book_id'], $_POST['book_name'], $_POST['author'], $_POST['description'], $category_id, $_POST['total_books'], $available_books);
+        if (isset($_GET['redirect_to'])) {
+            $redirect = decode_url($_GET['redirect_to']) . '&';
+        } else {
+            $redirect = 'admin_dashboard.php?';
+        }
         if ($result) {
-            header("location: admin_dashboard.php?alert=Saved+successfully&alert_type=success");
+            create_alert('Saved successfully', 'success');
+            header("location: {$redirect}");
             exit();
         } else {
-            header("location: admin_dashboard.php?alert=Some+error+occured&alert_type=danger");
+            create_alert('Some error occured', 'danger');
+            header("location: {$redirect}");
             exit();
         }
     }
 
 
     // GET REQUEST
-    elseif (isset($_GET['book_id'])) {
+    elseif (isset($_GET['bid'])) {
 
-        $sql = "SELECT * FROM `book` WHERE `book_id`='{$_GET['book_id']}'";
+        $sql = "SELECT * FROM `book` WHERE `book_id`='{$_GET['bid']}'";
         $result = mysqli_query($conn, $sql);
         if ($result and mysqli_num_rows($result) != 0) {
             $row = mysqli_fetch_assoc($result);
             $sql = "SELECT `category_name` FROM `category` WHERE `category_id`='{$row['category_id']}'";
             $result = mysqli_query($conn, $sql);
             $category = mysqli_fetch_assoc($result)['category_name'];
+        } else {
+            header("location: {$_GET['redirect_to']}");
+            exit();
+        }
+
+        if (isset($_GET['redirect_to'])) {
+            $redirect_to = "redirect_to={$_GET['redirect_to']}";
+        } else {
+            $redirect_to = '';
         }
 
         echo <<<END
-            <div class="container mt-4" style="width: 50em;">
-                <form action="{$_SERVER['PHP_SELF']}" method="POST">
+            <div class="container mt-2" style="width: 50em;">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a class="mx-2 btn btn-danger" href="remove_book.php?bid={$_GET['bid']}&$redirect_to" role="button">Remove Book</a>
+                </div>
+                <form action="{$_SERVER['PHP_SELF']}?$redirect_to" method="POST">
                     <div class="row g-3 align-items-center m-1">
                         <div class="col-auto">
                             <label for="title" class="col-form-label" style="width:6.2em;">Title</label>

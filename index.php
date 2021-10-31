@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/config.php'; ?>
+<?php require_once __DIR__ . '/config.php'; ?>
 
 <!doctype html>
 <html lang="en">
@@ -16,7 +16,7 @@
 
 <body>
 
-    <?php require 'partials/_navbar.html' ?>
+    <?php require_once 'partials/_navbar.html' ?>
 
     <h1>Hello, world!</h1>
 

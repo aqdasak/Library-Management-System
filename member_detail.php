@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/modules/_dbconnect.php';
+require_once __DIR__ . '/modules/_url.php';
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -58,15 +59,37 @@ require_once __DIR__ . '/modules/_dbconnect.php';
         </div>
     </nav>
 
+    <?php require_once __DIR__ . '/partials/_show_alert.php'; ?>
+
+    <?php
+    if (!isset($_GET['mid'])) {
+        if (isset($_GET['redirect_to'])) {
+            $redirect = decode_url($_GET['redirect_to']);
+        } else {
+            $redirect = 'admin_dashboard.php?';
+        }
+        header("location: {$redirect}");
+        exit();
+    }
+    ?>
     <div class="container">
         <div class="row">
 
             <?php
 
             // Personal details
-            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `member` WHERE `member_id`='{$_SESSION['member_id']}'";
+            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `member` WHERE `member_id`='{$_GET['mid']}'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
+            if (!$row) {
+                if (isset($_GET['redirect_to'])) {
+                    $redirect = decode_url($_GET['redirect_to']);
+                } else {
+                    $redirect = 'admin_dashboard.php?';
+                }
+                header("location: {$redirect}");
+                exit();
+            }
             echo ' <div class="col mt-3">
                         <h4><center><strong>👤 Personal details</strong></center></h4>
                         <ul class="mt-1 list-group list-group-horizontal">
@@ -121,14 +144,14 @@ require_once __DIR__ . '/modules/_dbconnect.php';
             echo '</div>';
 
             // Issued Books
-            $sql = "SELECT `book_id`, `date` FROM `issue` WHERE `member_id`='{$_SESSION['member_id']}'";
+            $sql = "SELECT `book_id`, `date` FROM `issue` WHERE `member_id`='{$_GET['mid']}'";
             $result = mysqli_query($conn, $sql);
             if ($result and mysqli_num_rows($result) != 0) {
                 echo ' <div class="col mt-3">
                         <h4><center><strong>📚 Issued Books</strong></center></h4>
                             <div class="mt-1 list-group list-group-horizontal">
                                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="width:3em;">
-                                    <strong>#</strong>
+                                <strong>#</strong>
                                 </a>
                                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                                     <strong>Books</strong>
@@ -136,8 +159,8 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
                                     <strong>Author</strong>
                                 </a>
-                                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                                    <strong>Return till</strong>
+                                <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="width:5.5em;">
+                                    <strong>Return</strong>
                                 </a>
                             </div>';
 
@@ -157,10 +180,17 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                                 <a href="#" class="list-group-item list-group-item-action">
                                     ' . $row2['author'] . '
                                 </a>
-                                <a href="#" class="list-group-item list-group-item-action" style="width:7em;">
-                                    ' . date('d-m-y', strtotime("{$row['date']} +{$config['library']['return_in_days']} days"))  . '
-                                </a>
+                                <form action="return_book.php?redirect_to=' . encode_url("member_detail.php?mid={$_GET['mid']}") . '" method="POST" style="width:4.2em">
+                                    <input type="hidden" id="book_id" name="book_id" value="' . $row['book_id'] . '">
+                                    <input type="hidden" id="member_id" name="member_id" value="' . $_GET['mid'] . '">
+                                    <button type="submit" class="list-group-item list-group-item-action">
+                                        <img src="static/image/bookshelf.svg" width="25em" height="25em" alt="Return book">
+                                    </button>
+                                </form>
                             </div>';
+                        // <a href="return_book." class="list-group-item list-group-item-action" style="width:5.5em;">
+                        //         ' . date('d-m-Y', strtotime("{$row['date']} +{$config['library']['return_in_days']} days"))  . '
+                        //     </a>
                     }
                     $i++;
                 }

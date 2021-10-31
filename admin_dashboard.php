@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/modules/_dbconnect.php';
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -29,7 +33,10 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="dashboard.php">Dashboard</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
+                        <a class="nav-link" href="search_member.php">Search Member</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Dropdown
                         </a>
@@ -41,10 +48,10 @@
                             </li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                         </ul>
-                    </li>
-                    <li class="nav-item">
+                    </li> -->
+                    <!-- <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <form class="d-flex" action="search.php" method="GET">
                     <input name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">
@@ -54,11 +61,14 @@
         </div>
     </nav>
 
+    <?php
+    require_once __DIR__ . '/partials/_show_alert.php';
+    ?>
+
     <div class="container">
         <div class="row">
 
             <?php
-            require __DIR__ . '/modules/_dbconnect.php';
 
             // Personal details
             $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `admin` WHERE `admin_id`='{$_SESSION['admin_id']}'";
@@ -115,6 +125,12 @@
                 </li>
             </ul>';
             }
+
+            // Add book button
+            echo '
+            <div class="container mt-5 mx-0">
+                <a href="add_book.php" class="btn btn-warning">Add New Book</a>
+            </div>';
             echo '</div>';
 
             // New users
@@ -145,7 +161,7 @@
                                     ' . $row['email'] . '
                                 </a>
                                 <a href="verify_user.php?mid=' . $row['member_id'] . '" class="list-group-item list-group-item-action" style="width: 5em;">
-                                    ✅
+                                    <img src="static/image/person-check.svg" width="25em" height="25em" alt="Verify user">
                                 </a>
                                 </div>';
                     $i++;
@@ -171,19 +187,6 @@
 
         </div>
     </div>
-    <?php
-    if (isset($_GET['alert']) and $_GET['alert'] != '') {
-        if (!isset($_GET['alert_type'])) {
-            $_GET['alert_type'] = 'info';
-        }
-        echo '<div class="container mt-3">
-                <div class="alert alert-' . $_GET['alert_type'] . ' alert-dismissible fade show" role="alert">
-                    ' .   $_GET['alert'] . '
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-              </div>';
-    }
-    ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

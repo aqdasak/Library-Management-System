@@ -6,7 +6,7 @@ function VALUES(...$args)
     for ($i = 0; $i < $len; $i++) {
         $w = $args[$i];
 
-        if ($w == NULL) {
+        if ($w === NULL) {
             $st .= 'NULL';
         } else {
             $st .= "'{$w}'";

@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '/modules/_add_book.php';
-require __DIR__ . '/modules/_dbconnect.php';
+require_once __DIR__ . '/modules/_add_book.php';
+require_once __DIR__ . '/modules/_dbconnect.php';
 ?>
 
 <!doctype html>
@@ -19,7 +19,7 @@ require __DIR__ . '/modules/_dbconnect.php';
 
 <body>
 
-    <?php require 'partials/_navbar.html' ?>
+    <?php require_once 'partials/_navbar.html' ?>
 
     <div class="container mt-4" style="width: 50em;">
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">

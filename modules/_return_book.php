@@ -1,8 +1,10 @@
 <?php
-require 'sql.php';
 
-function return_book($conn, int $member_id, int $book_id, $remark)
+function return_book($conn, $member_id, $book_id)
 {
+    require_once __DIR__ . '/../config.php';
+    require_once __DIR__ . '/_sql.php';
+
     $sql = "SELECT date FROM issue WHERE member_id=$member_id AND book_id=$book_id;";
     $result = mysqli_query($conn, $sql);
     // Checking whether the book is issued or not
@@ -11,6 +13,14 @@ function return_book($conn, int $member_id, int $book_id, $remark)
 
         // Adding to transaction_history table
         $current_date = date('Y-m-d');
+        $days_diff = ((array)date_diff(date_create($issue_date), date_create($current_date)))['days'];
+        if ($days_diff <= $config['library']['return_in_days']) {
+            $fine = 0;
+        } else {
+            $fine = ($days_diff - $config['library']['return_in_days']) * $config['library']['fine_per_day'];
+        }
+        $remark = "Fine: ₹$fine";
+
         $sql = 'INSERT INTO transaction_history' . VALUES($member_id, $book_id, $issue_date, $current_date, $remark);
         $result = mysqli_query($conn, $sql);
 
@@ -28,11 +38,13 @@ function return_book($conn, int $member_id, int $book_id, $remark)
         $sql = "UPDATE book SET available_books=$available_books WHERE book_id=$book_id;";
         $result = mysqli_query($conn, $sql);
 
-        echoln('Done');
+        // echoln('Done');
+        return $fine;
     } else {
-        echoln('Not issued');
+        // echoln('Not issued');
+        return NULL;
     }
 }
 
-require 'dbconnect.php';
-return_book($conn, 111, 111, 'enien');
+// require_once '_dbconnect.php';
+// return_book($conn, 2, 3,);
