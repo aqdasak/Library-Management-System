@@ -49,12 +49,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Mid box for navbar -->
         <div class="left">
             <ul class="navbar">
-                <li><a href="xfp1.php">Home</a></li>
+                <li><a href="member_login.php">Home</a></li>
                 <!-- <li><a href="alert.php">About Us</a></li>
                 <li><a href="alert.php">Read Books</a></li>
                 <li><a href="alert.php">Contact Us</a></li> -->
-                <li><a href="xadmlogin.php">Admin register</a></li>
-                <li><a href="xlogin1.php">Admin login</a></li>
+                <li><a href="admin_signup.php">Admin register</a></li>
+                <li><a href="admin_login.php">Admin login</a></li>
 
 
             </ul>
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="right">
             <form class="d-flex">
                 <input class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="button btn-outline-success" type="submit">Search</button>
             </form>
 
         </div>
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <div class="container">
-        <h1>Login</h1>
+        <h1 class="main-title">Admin Login</h1>
 
         <center>
             <?php
@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-group">
                 <input type="password" name="password" placeholder="Password">
             </div>
-            <button class="vertical-center">Login</button>
+            <center><button class="bottom-center">Login</button></center>
         </form>
     </div>
 </body>

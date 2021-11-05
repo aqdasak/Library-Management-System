@@ -67,7 +67,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
     </nav>
 
     <?php
-    require_once __DIR__ . '/partials/_show_alert.php';
+    require __DIR__ . '/partials/_show_alert.php';
     ?>
 
     <div class="container">
@@ -132,44 +132,63 @@ require_once __DIR__ . '/modules/_dbconnect.php';
             </ul>';
             }
 
+
+            // Add new admin
+            // echo '
+
             // Add book button
             echo '
-            <div class="container mt-5 mx-0">
-                <a href="add_book.php" class="btn btn-warning">Add New Book</a>
+            <div class="container mt-5">
+                <span style="margin-right: 1.5em;">
+                    <a href="admin_signup.php" class="btn btn-info">Add New Admin</a>
+                </span>
+
+                <span>
+                    <a href="add_book.php" class="btn btn-warning">Add New Book</a>
+                </span>
             </div>';
+
+
             echo '</div>';
 
             // New users
-            $sql = "SELECT * FROM `member` WHERE `verified`='0'";
+            $sql = "SELECT `member_id`, `firstname`, `lastname`, `email` FROM `member` WHERE `verified`='0'";
             $result = mysqli_query($conn, $sql);
             if ($result and mysqli_num_rows($result) != 0) {
                 echo ' <div class="col mt-3">
                         <h4><center><strong> 👥 New user</strong></center></h4>
-                            <div class="mt-1 list-group list-group-horizontal">
-                                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            <ul class="mt-1 list-group list-group-horizontal">
+                                <li class="list-group-item list-group-item-action active" aria-current="true">
                                     <strong>&nbsp;Name</strong>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                                </li>
+                                <li class="list-group-item list-group-item-action active" aria-current="true">
                                     <strong>Email</strong>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="width: 5em;">
+                                </li>
+                                <li class="list-group-item list-group-item-action active" aria-current="true" style="width: 5em;">
                                     <strong>Verify</strong>
-                                </a>
-                            </div>';
+                                </li>
+                            </ul>';
 
                 $i = 1;
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $href = "member_detail.php?mid={$row['member_id']}";
                     echo '<div class="list-group list-group-horizontal">
-                                <a href="#" class="list-group-item list-group-item-action">
+                                <a href="' . $href . '" class="list-group-item list-group-item-action">
                                     ' . "$i. {$row['firstname']} {$row['lastname']}" . '
                                 </a>
-                                <a href="#" class="list-group-item list-group-item-action">
+                                <a href="' . $href . '" class="list-group-item list-group-item-action">
                                     ' . $row['email'] . '
                                 </a>
-                                <a href="verify_user.php?mid=' . $row['member_id'] . '" class="list-group-item list-group-item-action" style="width: 5em;">
-                                    <img src="static/image/person-check.svg" width="25em" height="25em" alt="Verify user">
-                                </a>
+                                <form action="verify_user.php" method="POST">
+                                    <input type="hidden" id="book_id" name="member_id" value="' . $row['member_id'] . '" style="width: 5em;">
+                                    <button type="submit" class="list-group-item list-group-item-action">
+                                        <img src="static/image/person-check.svg" width="25em" height="25em" alt="Verify user">
+                                    </button>
+                                </form>
                                 </div>';
+                    //     <a href="verify_user.php?mid=' . $row['member_id'] . '" class="list-group-item list-group-item-action" style="width: 5em;">
+                    //     <img src="static/image/person-check.svg" width="25em" height="25em" alt="Verify user">
+                    // </a>
                     $i++;
                 }
                 echo '</div>';

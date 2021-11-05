@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $result = login_member($email, $password);
   if ($result) {
+    header('location: user_dashboard.php');
+    exit;
     // $sql = "Select * from member where email='$email' and password='$password'";
     // $result = mysqli_query($conn, $sql);
     // $num = mysqli_num_rows($result);
@@ -71,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- <li><a href="alert.php">About Us</a></li>
         <li><a href="alert.php">Read Books</a></li>
         <li><a href="alert.php">Contact Us</a></li> -->
-        <li><a href="admlogin.php">Admin register</a></li>
+        <!-- <li><a href="admlogin.php">Admin register</a></li> -->
         <li><a href="login1.php">Admin login</a></li>
       </ul>
     </div>
@@ -80,13 +82,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="right">
       <form class="d-flex">
         <input class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <button class="button btn-outline-success" type="submit">Search</button>
       </form>
 
     </div>
   </header>
   <div class="container">
-    <h1>WELCOME TO LIBRARY MANAGEMENT SYSTEM</h1>
+    <h1 class="main-title">WELCOME TO LIBRARY MANAGEMENT SYSTEM</h1>
 
     <center>
       <?php
@@ -107,11 +109,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="title">Login</div>
       <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
         <div class="input_box">
-          <input name="email" type="email" placeholder="Email" required>
+          <input name="email" type="email" placeholder="Email" required style="width: 94%;">
           <div class="icon"><i class="fas fa-user"></i></div>
         </div>
         <div class="input_box">
-          <input name="password" type="password" placeholder="Password" required>
+          <input name="password" type="password" placeholder="Password" required style="width: 94%;">
           <div class="icon"><i class="fas fa-lock"></i></div>
         </div>
         <!-- <div class="option_div">
@@ -127,7 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input type="submit" value="Login">
         </div>
         <div class="sign_up">
-          Not a member? <a href="xsignup.php">Signup now</a>
+          Not a member? <a href="member_signup.php">Signup now</a>
         </div>
       </form>
     </div>

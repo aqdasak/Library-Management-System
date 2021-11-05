@@ -104,6 +104,16 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                             </li>
                         </ul>';
 
+
+            echo '<ul class="list-group list-group-horizontal">
+                    <li class="list-group-item" style="width:13.5em;">
+                        <strong>Member ID</strong>
+                    </li>
+                    <li class="list-group-item" style="width:13.5em;">
+                        ' . $_GET['mid'] . '
+                    </li>
+                 </ul>';
+
             if ($row['firstname']) {
                 echo '<ul class="list-group list-group-horizontal">
                         <li class="list-group-item" style="width:13.5em;">

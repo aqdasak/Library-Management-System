@@ -3,7 +3,7 @@ require __DIR__ . '/partials/_member_required.php';
 ?>
 
 <?php
-require_once __DIR__ . '/config.php';
+require __DIR__ . '/config.php';
 require_once __DIR__ . '/modules/_dbconnect.php';
 ?>
 <!doctype html>
@@ -81,6 +81,16 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                                 <strong>Value</strong>
                             </li>
                         </ul>';
+
+
+            echo '<ul class="list-group list-group-horizontal">
+                    <li class="list-group-item" style="width:13.5em;">
+                        <strong>Member ID</strong>
+                    </li>
+                    <li class="list-group-item" style="width:13.5em;">
+                        ' . $_SESSION['login']['id'] . '
+                    </li>
+                 </ul>';
 
             if ($row['firstname']) {
                 echo '<ul class="list-group list-group-horizontal">

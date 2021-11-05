@@ -27,6 +27,9 @@ function issue_book($conn, $member_id, $book_id)
             if ($result and mysqli_num_rows($result) != 0) {
                 // echoln('You have already issued this book or wrong member id');
                 return -1;
+            } else {
+                // echoln('Wrong member id');
+                return -2;
             }
         }
     } else {

@@ -62,7 +62,7 @@ require_once __DIR__ . '/modules/_search_member.php';
         </div>
     </nav>
 
-    <?php require_once __DIR__ . '/partials/_show_alert.php'; ?>
+    <?php require __DIR__ . '/partials/_show_alert.php'; ?>
 
     <div class="container">
         <div class="row">
@@ -72,8 +72,8 @@ require_once __DIR__ . '/modules/_search_member.php';
             if (!isset($_GET['query']) or (isset($_GET['query']) and $_GET['query'] == '')) {
                 echo '<h4 class="mt-5"><center><strong>Search</strong></center></h4>';
                 echo '<form class="d-flex mt-3" action="search_member.php" method="GET">
-                        <input name="query" class="form-control me-2" type="search" placeholder="Search member" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                        <input name="query" class="form-control me-2" type="search" required placeholder="Search member" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>';
                 exit();
             }
@@ -118,8 +118,8 @@ require_once __DIR__ . '/modules/_search_member.php';
             } else {
                 echo '<h4 class="mt-5"><center><strong>Member not found. Search again</strong></center></h4>';
                 echo '<form class="d-flex mt-3" action="search_member.php" method="GET">
-                    <input name="query" class="form-control me-2" type="search" placeholder="Search member" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                        <input name="query" class="form-control me-2"    required placeholder="Search member" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>';
             }
             ?>

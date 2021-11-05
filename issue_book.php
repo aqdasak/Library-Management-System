@@ -42,7 +42,6 @@ require_once __DIR__ . '/modules/_alert.php';
     if (isset($_POST['book_id'])) {
         // Second step
         if (isset($_POST['member_id'])) {
-            $result = issue_book($conn, $_POST['member_id'], $_POST['book_id']);
 
             if (isset($_GET['redirect_to'])) {
                 $redirect = urldecode($_GET['redirect_to']);
@@ -50,18 +49,31 @@ require_once __DIR__ . '/modules/_alert.php';
                 $redirect = 'admin_dashboard.php?';
             }
 
-            if ($result == 1) {
-                create_alert('Book issued successfully', 'success');
-                header("location: {$redirect}");
-                exit();
-            } elseif ($result == -1) {
-                create_alert('The member have already issued this book or wrong member id entered', 'danger');
+            $sql = "SELECT `verified` FROM `member` WHERE `member_id`='{$_POST['member_id']}'";
+            $verified = mysqli_fetch_assoc(mysqli_query($conn, $sql))['verified'];
+            if (!$verified) {
+                create_alert('Member not verified', 'danger');
                 header("location: {$redirect}");
                 exit();
             } else {
-                create_alert('Book not available', 'danger');
-                header("location: {$redirect}");
-                exit();
+                $result = issue_book($conn, $_POST['member_id'], $_POST['book_id']);
+                if ($result == 1) {
+                    create_alert('Book issued successfully', 'success');
+                    header("location: {$redirect}");
+                    exit();
+                } elseif ($result == -1) {
+                    create_alert('The member have already issued this book', 'danger');
+                    header("location: {$redirect}");
+                    exit();
+                } elseif ($result == -2) {
+                    create_alert('Wrong member id entered', 'danger');
+                    header("location: {$redirect}");
+                    exit();
+                } else {
+                    create_alert('Book not available', 'danger');
+                    header("location: {$redirect}");
+                    exit();
+                }
             }
         } else {
             // First step
@@ -79,7 +91,7 @@ require_once __DIR__ . '/modules/_alert.php';
                                 <center><label for="member_id"><strong>Enter Member ID</strong></label></center>
                             </div>
                             <div>
-                                <input name="member_id" maxlength="11" type="text" id="member_id" class="form-control" aria-describedby="member_id">
+                                <input name="member_id" maxlength="11" type="number" required id="member_id" class="form-control" aria-describedby="member_id">
                             </div>
                         </div>
                         <input type="hidden" id="book_id" name="book_id" value="{$_POST['book_id']}">

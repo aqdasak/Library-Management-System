@@ -24,11 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if (($password == $cpassword)) {
-        $result = signup_member($fname, $lname, $phone, $email, $password);
+        $result1 = signup_member($fname, $lname, $phone, $email, $password);
+        $result = login_member($email, $password);
+        if ($result) {
+            header('location: user_dashboard.php');
+            exit;
+        }
         // $sql = "INSERT INTO `users1` ( `username`, `password`, `email`, `gender`, `phone`, `age`)
         //  VALUES ( '$username', '$password', '$email', '$gender', '$phone', '$age');";
         // $result = mysqli_query($conn, $sql);
-        if ($result) {
+        if ($result1) {
             $showAlert = '<strong>Account Created Successfully</strong> You can login now!';
         }
     } else {
@@ -56,13 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="left">
             <ul class="navbar">
                 <li><a href="/2nd/fp1.php">Home</a></li>
-                <li><a href="alert.php">About Us</a></li>
+                <!-- <li><a href="alert.php">About Us</a></li>
                 <li><a href="alert.php">Read Books</a></li>
-                <li><a href="alert.php">Contact Us</a></li>
-                <li><a href="admlogin.php">Admin register</a></li>
+                <li><a href="alert.php">Contact Us</a></li> -->
+                <!-- <li><a href="admlogin.php">Admin register</a></li> -->
                 <li><a href="login1.php">Admin login</a></li>
-
-
             </ul>
         </div>
 
@@ -70,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="right">
             <form class="d-flex">
                 <input class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="button btn-outline-success" type="submit">Search</button>
             </form>
 
         </div>
@@ -94,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </header>
     <div class="container">
-        <h1>Please Enter Your Details</h1>
+        <h1 class="main-title">Please Enter Your Details</h1>
 
         <center>
             <?php
@@ -138,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div> -->
 
 
-            <button class="bottom-center">Submit</button>
+            <center><button class="bottom-center">Submit</button></center>
         </form>
     </div>
 </body>

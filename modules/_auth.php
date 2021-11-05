@@ -65,7 +65,6 @@ function signup_admin($firstname, $lastname, $phone, $email, $password)
     $firstname = filter_var($firstname, FILTER_SANITIZE_STRING);
     $lastname = filter_var($lastname, FILTER_SANITIZE_STRING);
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-    $phone = filter_var($phone, FILTER_VALIDATE_INT);
 
     $sql = "INSERT INTO `admin` (`firstname`, `lastname`, `phone`, `email`, `password`) 
         VALUES ('$firstname', '$lastname', '$phone', '$email', '$password');";
@@ -83,7 +82,6 @@ function signup_member($firstname, $lastname, $phone, $email, $password)
     $firstname = filter_var($firstname, FILTER_SANITIZE_STRING);
     $lastname = filter_var($lastname, FILTER_SANITIZE_STRING);
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-    $phone = filter_var($phone, FILTER_VALIDATE_INT);
 
     $sql = "INSERT INTO `member` (`firstname`, `lastname`, `phone`, `email`, `password`,`verified`) 
         VALUES ('$firstname', '$lastname', '$phone', '$email', '$password','0');";
