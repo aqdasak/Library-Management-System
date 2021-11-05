@@ -1,4 +1,9 @@
 <?php
+session_start();
+require __DIR__ . '/partials/_admin_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/modules/_dbconnect.php';
 ?>
 
@@ -71,7 +76,8 @@ require_once __DIR__ . '/modules/_dbconnect.php';
             <?php
 
             // Personal details
-            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `admin` WHERE `admin_id`='{$_SESSION['admin_id']}'";
+            // $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `admin` WHERE `admin_id`='{$_SESSION['admin_id']}'";
+            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `admin` WHERE `admin_id`='{$_SESSION['login']['id']}'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             echo ' <div class="col mt-3">

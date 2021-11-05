@@ -1,6 +1,9 @@
 <?php
+require __DIR__ . '/partials/_admin_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/modules/_dbconnect.php';
-require_once __DIR__ . '/modules/_url.php';
 require_once __DIR__ . '/modules/_search_member.php';
 ?>
 <!doctype html>

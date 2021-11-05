@@ -1,4 +1,8 @@
 <?php
+require __DIR__ . '/partials/_admin_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/modules/_verify_user.php';
 require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_alert.php';

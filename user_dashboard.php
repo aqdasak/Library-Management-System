@@ -1,4 +1,8 @@
 <?php
+require __DIR__ . '/partials/_member_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/modules/_dbconnect.php';
 ?>
@@ -64,7 +68,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
             <?php
 
             // Personal details
-            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `member` WHERE `member_id`='{$_SESSION['member_id']}'";
+            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `member` WHERE `member_id`='{$_SESSION['login']['id']}'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             echo ' <div class="col mt-3">
@@ -121,7 +125,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
             echo '</div>';
 
             // Issued Books
-            $sql = "SELECT `book_id`, `date` FROM `issue` WHERE `member_id`='{$_SESSION['member_id']}'";
+            $sql = "SELECT `book_id`, `date` FROM `issue` WHERE `member_id`='{$_SESSION['login']['id']}'";
             $result = mysqli_query($conn, $sql);
             if ($result and mysqli_num_rows($result) != 0) {
                 echo ' <div class="col mt-3">

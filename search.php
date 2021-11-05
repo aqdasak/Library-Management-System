@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/modules/_url.php';
 require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_search_book.php';
 require_once __DIR__ . '/modules/_category.php';
@@ -119,10 +118,10 @@ require_once __DIR__ . '/modules/_category.php';
                                     <a href="#" class="list-group-item list-group-item-action" style="width:21em">
                                         ' . $row['available_books'] . '
                                     </a>
-                                    <a href="edit_book.php?bid=' . $row['book_id'] . '&redirect_to=' . encode_url("search.php?query={$_GET['query']}") . '" class="list-group-item list-group-item-action" style="width:3.5em">
+                                    <a href="edit_book.php?bid=' . $row['book_id'] . '&redirect_to=' . urlencode("search.php?query={$_GET['query']}") . '" class="list-group-item list-group-item-action" style="width:3.5em">
                                         <img src="static/image/pencil-square.svg" width="25em" height="25em" alt="Edit book">
                                     </a>
-                                    <form action="issue_book.php?redirect_to=' . encode_url("search.php?query={$_GET['query']}") . '" method="POST" style="width:4.2em">
+                                    <form action="issue_book.php?redirect_to=' . urlencode("search.php?query={$_GET['query']}") . '" method="POST" style="width:4.2em">
                                         <input type="hidden" id="book_id" name="book_id" value="' . $row['book_id'] . '">
                                         <button type="submit" class="list-group-item list-group-item-action">
                                             <img src="static/image/arrow-right-circle.svg" width="25em" height="25em" alt="Issue book">

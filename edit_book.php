@@ -1,8 +1,11 @@
 <?php
+require __DIR__ . '/partials/_admin_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_edit_book.php';
 require_once __DIR__ . '/modules/_category.php';
-require_once __DIR__ . '/modules/_url.php';
 require_once __DIR__ . '/modules/_alert.php';
 ?>
 
@@ -41,7 +44,7 @@ require_once __DIR__ . '/modules/_alert.php';
 
         $result = edit_book($conn, $_POST['book_id'], $_POST['book_name'], $_POST['author'], $_POST['description'], $category_id, $_POST['total_books'], $available_books);
         if (isset($_GET['redirect_to'])) {
-            $redirect = decode_url($_GET['redirect_to']) . '&';
+            $redirect = urldecode($_GET['redirect_to']) . '&';
         } else {
             $redirect = 'admin_dashboard.php?';
         }
@@ -50,7 +53,7 @@ require_once __DIR__ . '/modules/_alert.php';
             header("location: {$redirect}");
             exit();
         } else {
-            create_alert('Some error occured', 'danger');
+            create_alert('Some error occured' . mysqli_error($conn), 'danger');
             header("location: {$redirect}");
             exit();
         }

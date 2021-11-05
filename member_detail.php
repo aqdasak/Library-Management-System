@@ -1,6 +1,9 @@
 <?php
+require __DIR__ . '/partials/_admin_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/modules/_dbconnect.php';
-require_once __DIR__ . '/modules/_url.php';
 ?>
 
 <!doctype html>
@@ -64,7 +67,7 @@ require_once __DIR__ . '/modules/_url.php';
     <?php
     if (!isset($_GET['mid'])) {
         if (isset($_GET['redirect_to'])) {
-            $redirect = decode_url($_GET['redirect_to']);
+            $redirect = urldecode($_GET['redirect_to']);
         } else {
             $redirect = 'admin_dashboard.php?';
         }
@@ -83,7 +86,7 @@ require_once __DIR__ . '/modules/_url.php';
             $row = mysqli_fetch_assoc($result);
             if (!$row) {
                 if (isset($_GET['redirect_to'])) {
-                    $redirect = decode_url($_GET['redirect_to']);
+                    $redirect = urldecode($_GET['redirect_to']);
                 } else {
                     $redirect = 'admin_dashboard.php?';
                 }
@@ -180,7 +183,7 @@ require_once __DIR__ . '/modules/_url.php';
                                 <a href="#" class="list-group-item list-group-item-action">
                                     ' . $row2['author'] . '
                                 </a>
-                                <form action="return_book.php?redirect_to=' . encode_url("member_detail.php?mid={$_GET['mid']}") . '" method="POST" style="width:4.2em">
+                                <form action="return_book.php?redirect_to=' . urlencode("member_detail.php?mid={$_GET['mid']}") . '" method="POST" style="width:4.2em">
                                     <input type="hidden" id="book_id" name="book_id" value="' . $row['book_id'] . '">
                                     <input type="hidden" id="member_id" name="member_id" value="' . $_GET['mid'] . '">
                                     <button type="submit" class="list-group-item list-group-item-action">

@@ -1,9 +1,16 @@
-<?php
-session_start();
-$_SESSION['member_id'] = 1;
-$_SESSION['admin_id'] = 1;
-$_SESSION['user'] = 'admin';
+<!-- CONFIG FILE -->
 
+<?php
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+// $_SESSION['member_id'] = 1;
+// $_SESSION['admin_id'] = 1;
+// $_SESSION['user'] = 'admin';
+
+// $_SESSION['login'] = array('admin' => true, 'id' => 1);
+// unset($_SESSION['login']);
 
 $config = array(
     'debug' => false,

@@ -4,6 +4,11 @@ require_once __DIR__ . '/_category.php';
 
 function add_book($conn, $book_name,  $author, $description, $category, $no_of_books)
 {
+    $book_name = filter_var($book_name, FILTER_SANITIZE_STRING);
+    $author = filter_var($author, FILTER_SANITIZE_STRING);
+    $description = filter_var($description, FILTER_SANITIZE_STRING);
+    $category = filter_var($category, FILTER_SANITIZE_STRING);
+
     // Get category_id
     $sql = "SELECT category_id FROM category WHERE category_name='$category'";
     $result = mysqli_query($conn, $sql);

@@ -1,7 +1,10 @@
 <?php
+require __DIR__ . '/partials/_admin_required.php';
+?>
+
+<?php
 require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_return_book.php';
-require_once __DIR__ . '/modules/_url.php';
 require_once __DIR__ . '/modules/_alert.php';
 ?>
 
@@ -29,7 +32,7 @@ require_once __DIR__ . '/modules/_alert.php';
         $result = return_book($conn, $_POST['member_id'], $_POST['book_id']);
 
         if (isset($_GET['redirect_to'])) {
-            $redirect = decode_url($_GET['redirect_to']);
+            $redirect = urldecode($_GET['redirect_to']);
         } else {
             $redirect = 'admin_dashboard.php?';
         }
@@ -51,7 +54,7 @@ require_once __DIR__ . '/modules/_alert.php';
         }
     } else {
         if (isset($_GET['redirect_to'])) {
-            $redirect = decode_url($_GET['redirect_to']);
+            $redirect = urldecode($_GET['redirect_to']);
         } else {
             $redirect = 'admin_dashboard.php?';
         }
