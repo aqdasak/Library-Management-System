@@ -1,15 +1,16 @@
 <?php require __DIR__ . '/partials/_admin_required.php'; ?>
 
 <?php
-require_once __DIR__ . '/modules/_dbconnect.php';
-require_once __DIR__ . '/modules/_alert.php';
 require_once __DIR__ . '/modules/_auth.php';
+
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
 $showAlert = false;
 $showError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // $admin_id = $_POST["admin_id"];
     $Fname = $_POST["Fname"];
     $Lname = $_POST["Lname"];
     $email = $_POST["email"];
@@ -18,22 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cpassword = $_POST["cpassword"];
 
     if (($password == $cpassword)) {
-        // $sql = "INSERT INTO `admin` (`Fname`, `Lname`, `phno`, `email`, `password`) 
-        // VALUES ('$Fname', '$Lname', '$phno', '$email', '$password');";
-
-        // $result = mysqli_query($conn, $sql);
-
         $result = signup_admin($Fname, $Lname, $phno, $email, $password);
         if ($result) {
             $showAlert = '<strong>New admin account created Successfully</strong>';
-            // create_alert('<strong>Account Created Successfully</strong> You can login now!', 'success');
         }
     } else {
         $showError = '<strong>Error!</strong> Password don\'t match';
-        // create_alert('Password don\'t match', 'danger');
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -43,12 +36,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
     <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="static/image/favicon.ico">
 
-    <title>sign up</title>
+    <title>New Admin</title>
 </head>
 
 <body>
@@ -56,24 +48,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Mid box for navbar -->
         <div class="left">
             <ul class="navbar">
-                <li><a href="member_login.php">Home</a></li>
-                <!-- <li><a href="alert.php">About Us</a></li>
-                <li><a href="alert.php">Read Books</a></li>
-                <li><a href="alert.php">Contact Us</a></li> -->
-                <li><a href="admin_signup.php">Admin register</a></li>
-                <li><a href="admin_login.php">Admin login</a></li>
-
-
+                <li><a href="index.php">Home</a></li>
+                <li><a href="admin_dashboard.php">Dashboard</a></li>
+                <li><a href="search_member.php">Search Member</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
         </div>
-
-        <!-- Right box for buttons -->
+        <!-- Search -->
         <div class="right">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search">
+            <form action="search.php" class="d-flex">
+                <input name="query" method="POST" class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search Book">
                 <button class="button btn-outline-success" type="submit">Search</button>
             </form>
-
         </div>
     </header>
 
@@ -97,9 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </center>
 
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-            <!-- <div class="form-group">
-                <input type="text" name="admin_id" placeholder="admin id">
-            </div> -->
             <div class="form-group">
                 <input type="text" required name="Fname" placeholder="Firstname">
             </div>
@@ -121,8 +104,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <center><button class="bottom-center">Submit</button></center>
         </form>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </body>
 

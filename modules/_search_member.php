@@ -1,6 +1,9 @@
 <?php
-function search_member($conn, $query)
+require_once __DIR__ . '/_dbconnect.php';
+
+function search_member($query)
 {
+    global $conn;
     $query = "%$query%";
     $sql = "SELECT * FROM `member` WHERE `member_id` LIKE '$query' OR `firstname` LIKE '$query' OR `lastname` LIKE '$query' OR `phone` LIKE '$query' OR `email` LIKE '$query'";
 
@@ -10,11 +13,3 @@ function search_member($conn, $query)
     }
     return NULL;
 }
-
-// require_once '_dbconnect.php';
-// $result = search_member($conn, '@');
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         echoln("{$row['member_id']}\t{$row['firstname']}\t{$row['lastname']}");
-//     }
-// }

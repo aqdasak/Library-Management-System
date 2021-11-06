@@ -1,12 +1,10 @@
 <?php
-require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_auth.php';
 
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-$login = false;
 $showError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -14,19 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
 
     $result = login_admin($email, $password);
-
-    // $sql = "Select * from users1 where admin_id='$admin_id' and password='$password'";
-    // $result = mysqli_query($conn, $sql);
-    // $num = mysqli_num_rows($result);
-    // if ($num == 1) {
     if ($result) {
         $login = true;
-        // session_start();
-        // $_SESSION['loggedin'] = true;
-        // $_SESSION['admin_id'] = $admin_id;
         header("location: admin_dashboard.php");
     } else {
-        $showError = "Invalid credentials";
+        $showError = '<strong>Invalid credentials</strong>';
     }
 }
 
@@ -39,7 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <link rel="icon" href="static/image/favicon.ico">
+
+    <title>Admin Login</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
 <link rel="stylesheet" href="static/css/style.css">
@@ -49,24 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Mid box for navbar -->
         <div class="left">
             <ul class="navbar">
-                <li><a href="member_login.php">Home</a></li>
-                <!-- <li><a href="alert.php">About Us</a></li>
-                <li><a href="alert.php">Read Books</a></li>
-                <li><a href="alert.php">Contact Us</a></li> -->
-                <li><a href="admin_signup.php">Admin register</a></li>
-                <li><a href="admin_login.php">Admin login</a></li>
-
-
+                <li><a href="index.php">Home</a></li>
+                <li><a href="member_login.php">Member Login</a></li>
+                <li><a href="member_signup.php">Member Signup</a></li>
             </ul>
         </div>
-
-        <!-- Right box for buttons -->
+        <!-- Search -->
         <div class="right">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search">
+            <form action="search.php" class="d-flex">
+                <input name="query" method="POST" class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search Book">
                 <button class="button btn-outline-success" type="submit">Search</button>
             </form>
-
         </div>
     </header>
 
@@ -76,11 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <center>
             <?php
-            // if ($showAlert) {
-            //     echo ' <div class="myalert-success" role="alert">
-            //                ' . $showAlert . '
-            //            </div>';
-            // }
             if ($showError) {
                 echo ' <div class="myalert-danger" role="alert">
                           ' . $showError . '

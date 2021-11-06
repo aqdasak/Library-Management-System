@@ -1,9 +1,9 @@
 <?php
+require_once __DIR__ . '/../config.php';
 
 function __db_connection()
 {
-    require_once __DIR__ . '/../config.php';
-
+    global $config;
     $db = $config['Db'];
 
     $conn = mysqli_connect($db['servername'], $db['username'], $db['password'], $db['db_name']);

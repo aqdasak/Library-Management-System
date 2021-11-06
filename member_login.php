@@ -1,13 +1,12 @@
 <?php
+require_once __DIR__ . '/modules/_auth.php';
+
 if (session_status() != PHP_SESSION_ACTIVE) {
   session_start();
 }
-require_once __DIR__ . '/modules/_dbconnect.php';
-require_once __DIR__ . '/modules/_auth.php';
 ?>
 
 <?php
-$login = false;
 $showError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -18,20 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($result) {
     header('location: user_dashboard.php');
     exit;
-    // $sql = "Select * from member where email='$email' and password='$password'";
-    // $result = mysqli_query($conn, $sql);
-    // $num = mysqli_num_rows($result);
-    // if ($num > 0) {
-    $login = true;
-
-    //   $_SESSION['login'] = array('admin' => false, 'id' => $email);
-
-    // $_SESSION['loggedin']=true;
-    // $_SESSION['username']=$username;
-    // header("location: welcome.php");
-
   } else {
-    $showError = "Invalid credential";
+    $showError = '<strong>Invalid credentials</strong>';
   }
 }
 
@@ -44,47 +31,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="static/image/favicon.ico">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
   <link rel="stylesheet" href="static/css/style.css">
 
-  <title>LMS!</title>
+  <title>Login</title>
 </head>
 
 <body>
-
-
-  <!-- 
-  <!DOCTYPE html>
-  <html lang="en">
-
-  <head>
-    <title>LMS!</title>
-  </head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-  <link rel="stylesheet" href="static/css/style.css"> -->
 
   <!-- <body> -->
   <header class="header">
     <!-- Mid box for navbar -->
     <div class="left">
       <ul class="navbar">
-        <li><a href="/2nd/fp1.php">Home</a></li>
-        <!-- <li><a href="alert.php">About Us</a></li>
-        <li><a href="alert.php">Read Books</a></li>
-        <li><a href="alert.php">Contact Us</a></li> -->
-        <!-- <li><a href="admlogin.php">Admin register</a></li> -->
-        <li><a href="login1.php">Admin login</a></li>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="member_signup.php">Member Signup</a></li>
+        <li><a href="admin_login.php">Admin Login</a></li>
       </ul>
     </div>
-
-    <!-- Right box for buttons -->
+    <!-- Search -->
     <div class="right">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search">
+      <form action="search.php" class="d-flex">
+        <input name="query" method="POST" class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search Book">
         <button class="button btn-outline-success" type="submit">Search</button>
       </form>
-
     </div>
   </header>
   <div class="container">
@@ -92,11 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <center>
       <?php
-      if ($login) {
-        echo ' <div class="myalert-success" role="alert">
-        You are logged in successfully
-       </div>';
-      }
       if ($showError) {
         echo ' <div class="myalert-danger" role="alert">
         <strong>Error! </strong>' . $showError . '
@@ -116,15 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <input name="password" type="password" placeholder="Password" required style="width: 94%;">
           <div class="icon"><i class="fas fa-lock"></i></div>
         </div>
-        <!-- <div class="option_div">
-          <div class="check_box">
-            <input type="checkbox">
-            <span>Remember me</span>
-          </div>
-          <div class="forget_div">
-            <a href="#">Forgot password?</a>
-          </div>
-        </div> -->
         <div class="input_box button">
           <input type="submit" value="Login">
         </div>

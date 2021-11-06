@@ -1,11 +1,13 @@
-<?php
-require __DIR__ . '/partials/_admin_required.php';
-?>
+<?php require __DIR__ . '/partials/_admin_required.php'; ?>
 
 <?php
 require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_issue_book.php';
 require_once __DIR__ . '/modules/_alert.php';
+
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+}
 ?>
 
 <!doctype html>
@@ -15,16 +17,45 @@ require_once __DIR__ . '/modules/_alert.php';
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/image/favicon.ico">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>Library Management System</title>
+    <title>Issue</title>
 </head>
 
 <body>
 
-    <?php require_once 'partials/_navbar.html' ?>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search_member.php">Search Member</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Logout</a>
+                    </li>
+                </ul>
+                <form class="d-flex" action="search.php" method="GET">
+                    <input required name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
     <?php
 
@@ -56,7 +87,7 @@ require_once __DIR__ . '/modules/_alert.php';
                 header("location: {$redirect}");
                 exit();
             } else {
-                $result = issue_book($conn, $_POST['member_id'], $_POST['book_id']);
+                $result = issue_book($_POST['member_id'], $_POST['book_id']);
                 if ($result == 1) {
                     create_alert('Book issued successfully', 'success');
                     header("location: {$redirect}");

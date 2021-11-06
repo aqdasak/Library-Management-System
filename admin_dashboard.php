@@ -1,9 +1,9 @@
-<?php
-session_start();
-require __DIR__ . '/partials/_admin_required.php';
-?>
+<?php require __DIR__ . '/partials/_admin_required.php'; ?>
 
 <?php
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+}
 require_once __DIR__ . '/modules/_dbconnect.php';
 ?>
 
@@ -14,6 +14,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/image/favicon.ico">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -26,7 +27,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Library</a>
+            <a class="navbar-brand" href="index.php">Library</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,36 +37,22 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard.php">Dashboard</a>
+                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="search_member.php">Search Member</a>
                     </li>
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li> -->
-                    <!-- <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Logout</a>
+                    </li>
                 </ul>
                 <form class="d-flex" action="search.php" method="GET">
-                    <input name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">
+                    <input required name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
         </div>
     </nav>
-
     <?php
     require __DIR__ . '/partials/_show_alert.php';
     ?>
@@ -133,10 +120,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
             }
 
 
-            // Add new admin
-            // echo '
-
-            // Add book button
+            // Add new admin and Add new book
             echo '
             <div class="container mt-5">
                 <span style="margin-right: 1.5em;">
@@ -144,7 +128,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                 </span>
 
                 <span>
-                    <a href="add_book.php" class="btn btn-warning">Add New Book</a>
+                    <a href="add_book.php?redirect_to=admin_dashboard.php" class="btn btn-warning">Add New Book</a>
                 </span>
             </div>';
 
@@ -185,10 +169,7 @@ require_once __DIR__ . '/modules/_dbconnect.php';
                                         <img src="static/image/person-check.svg" width="25em" height="25em" alt="Verify user">
                                     </button>
                                 </form>
-                                </div>';
-                    //     <a href="verify_user.php?mid=' . $row['member_id'] . '" class="list-group-item list-group-item-action" style="width: 5em;">
-                    //     <img src="static/image/person-check.svg" width="25em" height="25em" alt="Verify user">
-                    // </a>
+                        </div>';
                     $i++;
                 }
                 echo '</div>';

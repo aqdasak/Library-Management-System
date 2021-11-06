@@ -1,9 +1,11 @@
 <?php
 require_once __DIR__ . '/_category.php';
+require_once __DIR__ . '/_dbconnect.php';
 
-function search_book($conn, $query)
+function search_book($query)
 {
-    $category_id = get_category_id($conn, $query);
+    global $conn;
+    $category_id = get_category_id($query);
 
     $query = "%$query%";
     $sql = "SELECT * FROM `book` WHERE `book_name` LIKE '$query' OR `author` LIKE '$query' OR `description` LIKE '$query' OR `category_id`='$category_id'";
@@ -14,13 +16,3 @@ function search_book($conn, $query)
     }
     return NULL;
 }
-
-// require_once '_dbconnect.php';
-// $result = search_book($conn, 'ru');
-// if ($result) {
-//     while ($row = mysqli_fetch_assoc($result)) {
-//         if ($row['total_books'] > 0) {
-//             echoln("{$row['book_name']}\t{$row['author']}\t{$row['available_books']}");
-//         }
-//     }
-// }

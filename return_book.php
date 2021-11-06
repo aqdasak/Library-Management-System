@@ -1,11 +1,12 @@
-<?php
-require __DIR__ . '/partials/_admin_required.php';
-?>
+<?php require __DIR__ . '/partials/_admin_required.php'; ?>
 
 <?php
-require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_return_book.php';
 require_once __DIR__ . '/modules/_alert.php';
+
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+}
 ?>
 
 <!doctype html>
@@ -15,28 +16,25 @@ require_once __DIR__ . '/modules/_alert.php';
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="static/image/favicon.ico">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>Library Management System</title>
+    <title>Return Book</title>
 </head>
 
 <body>
-
-    <?php require_once 'partials/_navbar.html' ?>
-
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['book_id']) and isset($_POST['member_id'])) {
-        $result = return_book($conn, $_POST['member_id'], $_POST['book_id']);
+        $result = return_book($_POST['member_id'], $_POST['book_id']);
 
         if (isset($_GET['redirect_to'])) {
             $redirect = urldecode($_GET['redirect_to']);
         } else {
             $redirect = 'admin_dashboard.php?';
         }
-
 
 
         if ($result === NULL) {

@@ -1,4 +1,6 @@
 <?php
+
+
 function create_alert($alert, $alert_type = 'info')
 {
     $_SESSION['alert'] = $alert;

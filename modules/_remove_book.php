@@ -1,9 +1,10 @@
 <?php
+require_once __DIR__ . '/_dbconnect.php';
 
-function remove_book($conn, $book_id)
+function remove_book($book_id)
 {
-    require_once __DIR__ . '/_sql.php';
 
+    global $conn;
     $sql = "DELETE FROM issue WHERE book_id='$book_id'";
     $result = mysqli_query($conn, $sql);
 
@@ -21,6 +22,3 @@ function remove_book($conn, $book_id)
         return false;
     }
 }
-
-// require_once 'dbconnect.php';
-// remove_book($conn, 4);

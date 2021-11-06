@@ -1,9 +1,10 @@
 <?php
+require_once __DIR__ . '/_dbconnect.php';
+require_once __DIR__ . '/_sql.php';
 
-function issue_book($conn, $member_id, $book_id)
+function issue_book($member_id, $book_id)
 {
-    require_once __DIR__ . '/_sql.php';
-
+    global $conn;
     $sql = "SELECT available_books FROM book WHERE book_id=$book_id;";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
@@ -11,7 +12,7 @@ function issue_book($conn, $member_id, $book_id)
 
     if ($available_books > 0) {
         $date = date('Y-m-d');
-        $sql = 'INSERT INTO issue' . VALUES($member_id, $book_id, $date);
+        $sql = 'INSERT INTO `issue`' . VALUES($member_id, $book_id, $date);
         $result = mysqli_query($conn, $sql);
 
         if ($result) {
@@ -25,10 +26,10 @@ function issue_book($conn, $member_id, $book_id)
             $sql = "SELECT * FROM issue WHERE member_id=$member_id AND book_id=$book_id;";
             $result = mysqli_query($conn, $sql);
             if ($result and mysqli_num_rows($result) != 0) {
-                // echoln('You have already issued this book or wrong member id');
+                // You have already issued this book or wrong member id
                 return -1;
             } else {
-                // echoln('Wrong member id');
+                // Wrong member id
                 return -2;
             }
         }
@@ -37,6 +38,3 @@ function issue_book($conn, $member_id, $book_id)
         return 0;
     }
 }
-
-// require_once 'dbconnect.php';
-// issue_book($conn, 1, 1);

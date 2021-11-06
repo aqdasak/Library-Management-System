@@ -1,10 +1,12 @@
 <?php
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/_dbconnect.php';
+require_once __DIR__ . '/_sql.php';
 
-function return_book($conn, $member_id, $book_id)
+function return_book($member_id, $book_id)
 {
-    require_once __DIR__ . '/../config.php';
-    require_once __DIR__ . '/_sql.php';
-
+    global $conn;
+    global $config;
     $sql = "SELECT date FROM issue WHERE member_id=$member_id AND book_id=$book_id;";
     $result = mysqli_query($conn, $sql);
     // Checking whether the book is issued or not
@@ -38,13 +40,10 @@ function return_book($conn, $member_id, $book_id)
         $sql = "UPDATE book SET available_books=$available_books WHERE book_id=$book_id;";
         $result = mysqli_query($conn, $sql);
 
-        // echoln('Done');
+        // Done
         return $fine;
     } else {
-        // echoln('Not issued');
+        //  Not issued
         return NULL;
     }
 }
-
-// require_once '_dbconnect.php';
-// return_book($conn, 2, 3,);

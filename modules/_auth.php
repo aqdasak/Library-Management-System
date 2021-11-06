@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/_dbconnect.php';
+require_once __DIR__ . '/_sql.php';
 
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
@@ -23,16 +24,19 @@ function is_member_loggedin()
 
 function login_admin($email, $password)
 {
+    global $conn;
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    global $conn;
-    $sql = "SELECT `admin_id` FROM `admin` WHERE email='$email' and password='$password'";
+    $sql = "SELECT `admin_id`, `password` FROM `admin` WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($result and mysqli_num_rows($result) != 0) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['login'] = array('admin' => true, 'id' => $row['admin_id']);
-        return true;
+
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['login'] = array('admin' => true, 'id' => $row['admin_id']);
+            return true;
+        }
     }
     return false;
 }
@@ -42,13 +46,16 @@ function login_member($email, $password)
     global $conn;
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    $sql = "SELECT `member_id` FROM `member` WHERE email='$email' and password='$password'";
+    $sql = "SELECT `member_id`,`password` FROM `member` WHERE email='$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($result and mysqli_num_rows($result) != 0) {
         $row = mysqli_fetch_assoc($result);
-        $_SESSION['login'] = array('admin' => false, 'id' => $row['member_id']);
-        return true;
+
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['login'] = array('admin' => false, 'id' => $row['member_id']);
+            return true;
+        }
     }
     return false;
 }
@@ -66,8 +73,8 @@ function signup_admin($firstname, $lastname, $phone, $email, $password)
     $lastname = filter_var($lastname, FILTER_SANITIZE_STRING);
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    $sql = "INSERT INTO `admin` (`firstname`, `lastname`, `phone`, `email`, `password`) 
-        VALUES ('$firstname', '$lastname', '$phone', '$email', '$password');";
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO `admin` (`firstname`, `lastname`, `phone`, `email`, `password`) " . VALUES($firstname, $lastname, $phone, $email, $password);
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
@@ -83,8 +90,8 @@ function signup_member($firstname, $lastname, $phone, $email, $password)
     $lastname = filter_var($lastname, FILTER_SANITIZE_STRING);
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    $sql = "INSERT INTO `member` (`firstname`, `lastname`, `phone`, `email`, `password`,`verified`) 
-        VALUES ('$firstname', '$lastname', '$phone', '$email', '$password','0');";
+    $password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO `member` (`firstname`, `lastname`, `phone`, `email`, `password`,`verified`)" . VALUES($firstname, $lastname, $phone, $email, $password, 0);
 
     $result = mysqli_query($conn, $sql);
     if ($result) {
