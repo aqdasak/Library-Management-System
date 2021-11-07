@@ -27,12 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         header('location: admin_dashboard.php');
     }
-    // echo '<div class="container mt-3">
-    // <div class="alert alert-' . $alert_type . ' alert-dismissible fade show" role="alert">
-    //             ' .   $alert . '
-    //             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    //         </div>
-    //       </div>';
 }
 ?>
 

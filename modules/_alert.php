@@ -1,5 +1,7 @@
 <?php
-
+if (session_status() != PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
 function create_alert($alert, $alert_type = 'info')
 {

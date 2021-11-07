@@ -63,7 +63,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
             if (!isset($_GET['query']) or (isset($_GET['query']) and $_GET['query'] == '')) {
                 echo '<h4 class="mt-5"><center><strong>Search</strong></center></h4>';
                 echo '<form class="d-flex mt-3" action="search_member.php" method="GET">
-                        <input name="query" class="form-control me-2" type="search" required placeholder="Search member" aria-label="Search">
+                        <input name="query" autofocus class="form-control me-2" type="search" required placeholder="Search member" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>';
                 exit();
@@ -109,7 +109,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
             } else {
                 echo '<h4 class="mt-5"><center><strong>Member not found. Search again</strong></center></h4>';
                 echo '<form class="d-flex mt-3" action="search_member.php" method="GET">
-                        <input name="query" class="form-control me-2"    required placeholder="Search member" aria-label="Search">
+                        <input name="query" autofocus class="form-control me-2"    required placeholder="Search member" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>';
             }

@@ -54,13 +54,15 @@ if (session_status() != PHP_SESSION_ACTIVE) {
         </div>
     </nav>
 
+    <?php require __DIR__ . '/partials/_show_alert.php'; ?>
+
     <div class="container">
         <div class="row">
 
             <?php
 
             // Personal details
-            $sql = "SELECT `firstname`, `lastname`,`phone`,`email` FROM `member` WHERE `member_id`='{$_SESSION['login']['id']}'";
+            $sql = "SELECT `firstname`, `lastname`,`phone`,`email`,`verified` FROM `member` WHERE `member_id`='{$_SESSION['login']['id']}'";
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             echo ' <div class="col mt-3">
@@ -126,11 +128,12 @@ if (session_status() != PHP_SESSION_ACTIVE) {
             }
             echo '</div>';
 
-            // Issued Books
-            $sql = "SELECT `book_id`, `date` FROM `issue` WHERE `member_id`='{$_SESSION['login']['id']}'";
-            $result = mysqli_query($conn, $sql);
-            if ($result and mysqli_num_rows($result) != 0) {
-                echo ' <div class="col mt-3">
+            if ($row['verified'] == 1) {
+                // Issued Books
+                $sql = "SELECT `book_id`, `date` FROM `issue` WHERE `member_id`='{$_SESSION['login']['id']}'";
+                $result = mysqli_query($conn, $sql);
+                if ($result and mysqli_num_rows($result) != 0) {
+                    echo ' <div class="col mt-3">
                         <h4><center><strong>📚 Issued Books</strong></center></h4>
                             <div class="mt-1 list-group list-group-horizontal">
                                 <a href="#" class="list-group-item list-group-item-action active" aria-current="true" style="width:3em;">
@@ -147,13 +150,13 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                                 </a>
                             </div>';
 
-                $i = 1;
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $sql2 = "SELECT `book_name`,`author` FROM `book` WHERE `book_id`='{$row['book_id']}'";
-                    $result2 = mysqli_query($conn, $sql2);
-                    if ($result2) {
-                        $row2 = mysqli_fetch_assoc($result2);
-                        echo '<div class="list-group list-group-horizontal">
+                    $i = 1;
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $sql2 = "SELECT `book_name`,`author` FROM `book` WHERE `book_id`='{$row['book_id']}'";
+                        $result2 = mysqli_query($conn, $sql2);
+                        if ($result2) {
+                            $row2 = mysqli_fetch_assoc($result2);
+                            echo '<div class="list-group list-group-horizontal">
                                 <a href="#" class="list-group-item list-group-item-action" style="width:3em;">
                                     ' . $i . '
                                 </a>
@@ -167,14 +170,14 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                                     ' . date('d-m-y', strtotime("{$row['date']} +{$config['library']['return_in_days']} days"))  . '
                                 </a>
                             </div>';
+                        }
+                        $i++;
                     }
-                    $i++;
-                }
-                echo '</div>';
-            } else {
-                echo '<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    echo '</div>';
+                } else {
+                    echo '<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                         <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
                         </symbol>
                     </svg>
                     <div class="col mt-5">
@@ -185,6 +188,21 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                             </div>
                         </div>
                     </div';
+                }
+            } else {
+                echo '<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="person-x-fill" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+                    </symbol>
+                </svg>
+                <div class="col mt-5">
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#person-x-fill"/></svg>
+                        <div>
+                            You are not verified. Contact admin for verification.
+                        </div>
+                    </div>
+                </div';
             }
 
             ?>

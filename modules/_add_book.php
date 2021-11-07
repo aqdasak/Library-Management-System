@@ -15,20 +15,18 @@ function add_book($book_name,  $author, $description, $category, $no_of_books)
     $description = filter_var($description, FILTER_SANITIZE_STRING);
     $category = filter_var($category, FILTER_SANITIZE_STRING);
 
-    if ($category == '') {
-        $category = 'NULL';
-    }
-    if ($description == '') {
-        $description = 'NULL';
-    }
+    $book_name = trim($book_name);
+    $author = trim($author);
+    $description = trim($description);
+    $category = trim($category);
 
-    // Get category_id
-    $sql = "SELECT category_id FROM category WHERE category_name='$category'";
-    $result = mysqli_query($conn, $sql);
-    if ($result and mysqli_num_rows($result) != 0) {
-        $category_id = mysqli_fetch_assoc($result)['category_id'];
+    if ($category == '') {
+        $category_id = NULL;
     } else {
-        $category_id = add_category($category);
+        $category_id = get_category_id($category);
+        if ($category_id === NULL) {
+            $category_id = add_category($category);
+        }
     }
 
     // Adding book

@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <div class="container">
-        <h1>New admin</h1>
+        <h1 class="main-title">New admin</h1>
 
         <center>
             <?php
@@ -84,22 +84,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
             <div class="form-group">
-                <input type="text" required name="Fname" placeholder="Firstname">
+                <input type="text" autofocus maxlength="10" required name="Fname" placeholder="Firstname">
             </div>
             <div class="form-group">
-                <input type="text" required name="Lname" placeholder="Lastname">
+                <input type="text" maxlength="30" required name="Lname" placeholder="Lastname">
             </div>
             <div class="form-group">
-                <input type="email" required name="email" placeholder="Email">
+                <input type="email" maxlength="30" required name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="number" name="phno" placeholder="Phone no.">
+                <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" name="phno" placeholder="Phone no.">
             </div>
             <div class="form-group">
-                <input type="password" required name="password" placeholder="Password">
+                <input type="password" maxlength="255" required name="password" placeholder="Password">
             </div>
             <div class="form-group">
-                <input type="password" required name="cpassword" placeholder="Confirm password">
+                <input type="password" maxlength="255" required name="cpassword" placeholder="Confirm password">
             </div>
             <center><button class="bottom-center">Submit</button></center>
         </form>

@@ -1,12 +1,11 @@
 <?php
 require_once __DIR__ . '/modules/_auth.php';
+require_once __DIR__ . '/modules/_alert.php';
 
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
-?>
 
-<?php
 $showAlert = false;
 $showError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -23,10 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result1 = signup_member($fname, $lname, $phone, $email, $password);
         $result = login_member($email, $password);
         if ($result) {
+            create_alert('Account created successfully', 'success');
             header('location: user_dashboard.php');
             exit;
         } elseif ($result1) {
-            $showAlert = '<strong>Account Created Successfully</strong> You can login now!';
+            $showAlert = '<strong>Account created successfully</strong> You can login now!';
+        } else {
+            $showError = '<strong>Some error occurred</strong>';
         }
     } else {
         $showError = '<strong>Error!</strong> Password don\'t match';
@@ -88,22 +90,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
             <div class="form-group">
-                <input required type="text" name="Fname" placeholder="Firstname">
+                <input required autofocus maxlength="10" type="text" name="Fname" placeholder="Firstname">
             </div>
             <div class="form-group">
-                <input required type="text" name="Lname" placeholder="Lastname">
+                <input required maxlength="30" type="text" name="Lname" placeholder="Lastname">
             </div>
             <div class="form-group">
-                <input required type="email" name="email" placeholder="Email">
+                <input required maxlength="30" type="email" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input required type="password" name="password" placeholder="Password">
+                <input required maxlength="255" type="password" name="password" placeholder="Password">
             </div>
             <div class="form-group">
-                <input required type="password" name="cpassword" placeholder="Confirm password">
+                <input required maxlength="255" type="password" name="cpassword" placeholder="Confirm password">
             </div>
             <div class="form-group">
-                <input type="number" name="phone" placeholder="Pnone no.">
+                <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="10" type="number" name="phone" placeholder="Phone no.">
             </div>
 
             <center><button class="bottom-center">Submit</button></center>

@@ -122,7 +122,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                                 <center><label for="member_id"><strong>Enter Member ID</strong></label></center>
                             </div>
                             <div>
-                                <input name="member_id" maxlength="11" type="number" required id="member_id" class="form-control" aria-describedby="member_id">
+                                <input name="member_id" autofocus maxlength="11" type="number" required id="member_id" class="form-control" aria-describedby="member_id">
                             </div>
                         </div>
                         <input type="hidden" id="book_id" name="book_id" value="{$_POST['book_id']}">

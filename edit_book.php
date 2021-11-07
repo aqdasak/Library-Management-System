@@ -107,7 +107,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                             <label for="title" class="col-form-label" style="width:6.2em;">Title</label>
                         </div>
                         <div class="col">
-                            <input required name="book_name" maxlength="40" type="text" id="title" class="form-control" aria-describedby="title" value="{$row['book_name']}">
+                            <input required autofocus name="book_name" maxlength="40" type="text" id="title" class="form-control" aria-describedby="title" value="{$row['book_name']}">
                         </div>
                     </div>
                     <div class="row g-3 align-items-center m-1">
@@ -158,16 +158,8 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 
         // Second step
         elseif ($_POST['step'] == 2) {
-            if ($_POST['category'] == '') {
-                $category_id = NULL;
-            } else {
-                $category_id = get_category_id($_POST['category']);
-                if ($category_id === NULL) {
-                    $category_id = add_category($_POST['category']);
-                }
-            }
+            $result = edit_book($_POST['book_id'], $_POST['book_name'], $_POST['author'], $_POST['description'], $_POST['category'], $_POST['total_books']);
 
-            $result = edit_book($_POST['book_id'], $_POST['book_name'], $_POST['author'], $_POST['description'], $category_id, $_POST['total_books']);
             if ($result == 1) {
                 create_alert('Saved successfully', 'success');
             } elseif ($result == -1) {

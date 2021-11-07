@@ -73,14 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </center>
 
     <div class="main_div">
-      <div class="title">Login</div>
+      <div class="title">Member Login</div>
       <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
         <div class="input_box">
-          <input name="email" type="email" placeholder="Email" required style="width: 94%;">
+          <input name="email" autofocus maxlength="30" type="email" placeholder="Email" required style="width: 94%;">
           <div class="icon"><i class="fas fa-user"></i></div>
         </div>
         <div class="input_box">
-          <input name="password" type="password" placeholder="Password" required style="width: 94%;">
+          <input name="password" maxlength="255" type="password" placeholder="Password" required style="width: 94%;">
           <div class="icon"><i class="fas fa-lock"></i></div>
         </div>
         <div class="input_box button">

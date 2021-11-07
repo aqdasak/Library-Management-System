@@ -20,7 +20,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
     <title>LMS</title>
 </head>
 
-<body>
+<body style="background-image:  url('static/image/bg.webp'); background-size: cover;">
 
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -49,7 +49,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
     </nav>
 
     <center style="margin-top: 8em;">
-        <h1>
+        <h1 style="background-color: #f8fcff; display: inline; color:black;">
             <strong>
                 LIBRARY MANAGEMENT SYSTEM
             </strong>

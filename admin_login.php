@@ -59,22 +59,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h1 class="main-title">Admin Login</h1>
 
-        <center>
-            <?php
-            if ($showError) {
-                echo ' <div class="myalert-danger" role="alert">
-                          ' . $showError . '
-                       </div>';
-            }
-            ?>
-        </center>
+        <?php
+        if ($showError) {
+
+            echo '<center>
+                    <div class="myalert-danger" role="alert">
+                        ' . $showError . '
+                    </div>
+                </center>';
+        }
+        ?>
 
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <div class="form-group">
-                <input type="email" name="email" placeholder="Email">
+                <input autofocus type="email" maxlength="30" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" maxlength="255" name="password" placeholder="Password">
             </div>
             <center><button class="bottom-center">Login</button></center>
         </form>
