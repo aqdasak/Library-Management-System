@@ -1,6 +1,5 @@
-<?php require __DIR__ . '/partials/_admin_required.php'; ?>
+<?php require __DIR__ . '/partials/_admin_required.php';
 
-<?php
 require_once __DIR__ . '/modules/_return_book.php';
 require_once __DIR__ . '/modules/_alert.php';
 

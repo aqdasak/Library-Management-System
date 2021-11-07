@@ -1,6 +1,5 @@
-<?php require __DIR__ . '/partials/_admin_required.php'; ?>
+<?php require __DIR__ . '/partials/_admin_required.php';
 
-<?php
 require_once __DIR__ . '/modules/_edit_book.php';
 require_once __DIR__ . '/modules/_dbconnect.php';
 require_once __DIR__ . '/modules/_category.php';
@@ -30,6 +29,17 @@ if (session_status() != PHP_SESSION_ACTIVE) {
         let del = confirm('Book, all issues and history will be deleted.');
         if (del) {
             document.getElementById("delete-book-form").submit();
+        }
+    }
+
+    function no_negative(params) {
+        let no_of_books = document.getElementById("total_books").value;
+        if (no_of_books.length > 0) {
+            if (no_of_books <= 0) {
+                alert("Number of books should be greater than 0");
+            } else {
+                document.getElementById("edit-book-form").submit();
+            }
         }
     }
 </script>
@@ -101,7 +111,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                 <button class="btn btn-danger mx-2" onclick="delete_book()">Remove Book</button> 
 
                 </div>
-                <form action="{$_SERVER['PHP_SELF']}?$redirect_to" method="POST">
+                <form id="edit-book-form" onsubmit="no_negative(); return false" action="{$_SERVER['PHP_SELF']}?$redirect_to" method="POST">
                     <div class="row g-3 align-items-center m-1">
                         <div class="col-auto">
                             <label for="title" class="col-form-label" style="width:6.2em;">Title</label>

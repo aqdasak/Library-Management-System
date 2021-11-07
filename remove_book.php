@@ -4,9 +4,8 @@ require __DIR__ . '/partials/_admin_required.php';
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
-?>
 
-<?php
+
 require_once __DIR__ . '/modules/_remove_book.php';
 require_once __DIR__ . '/modules/_alert.php';
 

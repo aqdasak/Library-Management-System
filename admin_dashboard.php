@@ -1,6 +1,5 @@
-<?php require __DIR__ . '/partials/_admin_required.php'; ?>
+<?php require __DIR__ . '/partials/_admin_required.php';
 
-<?php
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }

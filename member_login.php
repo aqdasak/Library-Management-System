@@ -4,9 +4,8 @@ require_once __DIR__ . '/modules/_auth.php';
 if (session_status() != PHP_SESSION_ACTIVE) {
   session_start();
 }
-?>
 
-<?php
+
 $showError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

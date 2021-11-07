@@ -1,6 +1,5 @@
-<?php require __DIR__ . '/partials/_admin_required.php'; ?>
+<?php require __DIR__ . '/partials/_admin_required.php';
 
-<?php
 require_once __DIR__ . '/modules/_add_book.php';
 require_once __DIR__ . '/modules/_alert.php';
 
@@ -45,6 +44,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Add book</title>
 </head>
 
+<script>
+    function no_negative(params) {
+        let no_of_books = document.getElementById("no_of_books").value;
+        if (no_of_books.length > 0) {
+            if (no_of_books <= 0) {
+                alert("Number of books should be greater than 0");
+            } else {
+                document.getElementById("add-book-form").submit();
+            }
+        }
+    }
+</script>
+
 <body>
 
     <!-- navbar -->
@@ -78,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </nav>
 
     <div class="container mt-4" style="width: 50em;">
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+        <form id="add-book-form" onsubmit="no_negative(); return false" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
             <div class="row g-3 align-items-center m-1">
                 <div class="col-auto">
                     <label for="title" class="col-form-label" style="width:6.2em;">Title</label>
