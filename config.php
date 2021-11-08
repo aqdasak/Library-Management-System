@@ -1,6 +1,6 @@
-<!-- CONFIG FILE -->
-
 <?php
+// CONFIG FILE
+
 $config = array(
     'debug' => false,
     'Db' => array(

@@ -1,12 +1,12 @@
 <?php require __DIR__ . '/partials/_admin_required.php';
 
 require_once __DIR__ . '/modules/_auth.php';
+require_once __DIR__ . '/modules/_alert.php';
 
 if (session_status() != PHP_SESSION_ACTIVE) {
     session_start();
 }
 
-$showAlert = false;
 $showError = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -20,7 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (($password == $cpassword)) {
         $result = signup_admin($Fname, $Lname, $phno, $email, $password);
         if ($result) {
-            $showAlert = '<strong>New admin account created Successfully</strong>';
+            create_alert('New admin account created successfully', 'success');
+            header("location: admin_dashboard.php");
+        } else {
+            $showError = '<strong>Some error occurred</strong>';
         }
     } else {
         $showError = '<strong>Error!</strong> Password don\'t match';
@@ -66,20 +69,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container">
         <h1 class="main-title">New admin</h1>
 
-        <center>
-            <?php
-            if ($showAlert) {
-                echo ' <div class="myalert-success" role="alert">
-                            ' . $showAlert . '
-                       </div>';
-            }
-            if ($showError) {
-                echo ' <div class="myalert-danger" role="alert">
-                           ' . $showError . '
-                        </div>';
-            }
-            ?>
-        </center>
+
+        <?php
+        if ($showError) {
+            echo '<center>
+                    <div class="myalert-danger" role="alert">
+                        ' . $showError . '
+                    </div>
+                </center>';
+        }
+        ?>
+
 
         <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
             <div class="form-group">

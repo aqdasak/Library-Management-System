@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $result = login_admin($email, $password);
     if ($result) {
-        $login = true;
         header("location: admin_dashboard.php");
     } else {
         $showError = '<strong>Invalid credentials</strong>';
