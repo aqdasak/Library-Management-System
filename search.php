@@ -93,6 +93,12 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                     }
                     echo '</div>';
 
+                    if (is_admin_loggedin()) {
+                        $available_column_width = '21em';
+                    } else {
+                        $available_column_width = '14em';
+                    }
+
 
                     while ($row = mysqli_fetch_assoc($result)) {
                         // if ($row['total_books'] > 0) {
@@ -106,7 +112,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                                     <li class="list-group-item list-group-item-action" style="width:18em">
                                         ' . get_category_name($row['category_id']) . '
                                     </li>
-                                    <li class="list-group-item list-group-item-action" style="width:21em">
+                                    <li class="list-group-item list-group-item-action" style="width:' . $available_column_width . '">
                                         ' . $row['available_books'] . '
                                     </li>';
                         if (is_admin_loggedin()) {

@@ -39,7 +39,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Search Member</a>
+                        <a class="nav-link active" aria-current="page" href="search_member.php">Search Member</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
