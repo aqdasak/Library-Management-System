@@ -23,7 +23,7 @@ function return_book($member_id, $book_id)
         }
         $remark = "Fine: ₹$fine";
 
-        $sql = 'INSERT INTO transaction_history' . VALUES($member_id, $book_id, $issue_date, $current_date, $remark);
+        $sql = 'INSERT INTO `transaction_history` (`member_id`, `book_id`, `issue_date`, `return_date`, `remark`)' . VALUES($member_id, $book_id, $issue_date, $current_date, $remark);
         $result = mysqli_query($conn, $sql);
 
         // Deleting entry fron issue table

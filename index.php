@@ -16,7 +16,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>LMS</title>
+    <title>Library Management System</title>
 </head>
 
 <body style="background-image:  url('static/image/bg.webp'); background-size: cover;">
@@ -37,7 +37,7 @@ if (session_status() != PHP_SESSION_ACTIVE) {
                     <?php require __DIR__ . '/partials/navbar/_login.php'; ?>
                     <?php require __DIR__ . '/partials/navbar/_dashboard.php'; ?>
                     <?php require __DIR__ . '/partials/navbar/_search_member.php'; ?>
-                    `<?php require __DIR__ . '/partials/navbar/_logout.php'; ?>
+                    <?php require __DIR__ . '/partials/navbar/_logout.php'; ?>
                 </ul>
                 <form class="d-flex" action="search.php" method="GET">
                     <input required name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">

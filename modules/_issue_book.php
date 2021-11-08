@@ -12,7 +12,7 @@ function issue_book($member_id, $book_id)
 
     if ($available_books > 0) {
         $date = date('Y-m-d');
-        $sql = 'INSERT INTO `issue`' . VALUES($member_id, $book_id, $date);
+        $sql = 'INSERT INTO `issue` (`member_id`, `book_id`, `date`)' . VALUES($member_id, $book_id, $date);
         $result = mysqli_query($conn, $sql);
 
         if ($result) {

@@ -80,8 +80,13 @@ if (session_status() != PHP_SESSION_ACTIVE) {
             }
 
             $sql = "SELECT `verified` FROM `member` WHERE `member_id`='{$_POST['member_id']}'";
-            $verified = mysqli_fetch_assoc(mysqli_query($conn, $sql))['verified'];
-            if (!$verified) {
+            $result = mysqli_query($conn, $sql);
+            $verified = mysqli_fetch_assoc($result)['verified'];
+            if (mysqli_num_rows($result) == 0) {
+                create_alert('Wrong member id entered', 'danger');
+                header("location: {$redirect}");
+                exit();
+            } elseif ($verified == 0) {
                 create_alert('Member not verified', 'danger');
                 header("location: {$redirect}");
                 exit();
