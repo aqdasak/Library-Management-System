@@ -34,8 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <title>Admin Login</title>
 </head>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-<link rel="stylesheet" href="static/css/style.css"> -->
 
 <body>
 
@@ -82,17 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </h4>
 
             <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-
-
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" class="form-control mt-1" maxlength="30" name="email" type="email" autofocus required placeholder="Enter email">
+                    <input id="email" class="form-control mt-1" name="email" type="email" maxlength="30" autofocus required placeholder="Enter email">
                 </div>
                 <div class="form-group mt-3">
                     <label for="password">Password</label>
                     <input id="password" class="form-control mt-1" name="password" type="password" maxlength="255" placeholder="Password" required>
                 </div>
-
                 <button type="submit" class="btn btn-primary mt-3">Login</button>
             </form>
         </div>
