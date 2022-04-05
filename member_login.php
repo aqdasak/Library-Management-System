@@ -70,7 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   <div class="container">
-    <h1 class="main-title">WELCOME TO LIBRARY MANAGEMENT SYSTEM</h1>
 
     <center>
       <?php
@@ -82,26 +81,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       ?>
     </center>
 
-    <div class="main_div">
-      <div class="title">Member Login</div>
+    <div class="main_div mt-4">
+      <h4>
+        <center><strong>Member Login</strong></center>
+      </h4>
+
 
       <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
         <div class="form-group">
-          <label for="email">Email address</label>
-          <input name="email" id="email" class="form-control" autofocus maxlength="30" type="email" placeholder="Enter email" required style="width: 94%;">
-          <div class="icon"><i class="fas fa-user"></i></div>
+          <label for="email">Email</label>
+          <input name="email" id="email" class="form-control mt-1" autofocus maxlength="30" type="email" placeholder="Enter email" required style="width: 94%;">
+          <!-- <div class="icon"><i class="fas fa-user"></i></div> -->
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3">
           <label for="password">Password</label>
-          <input name="password" id="password" class="form-control" maxlength="255" type="password" placeholder="Password" required style="width: 94%;">
-          <div class="icon"><i class="fas fa-lock"></i></div>
+          <input name="password" id="password" class="form-control mt-1" maxlength="255" type="password" placeholder="Password" required style="width: 94%;">
+          <!-- <div class="icon"><i class="fas fa-lock"></i></div> -->
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary mt-3">Login</button>
 
         <!-- </div> -->
-        <div class="sign_up">
-          Not a member? <a href="member_signup.php">Signup now</a>
+        <div class="sign_up mt-1">
+          Not a member? <a href="member_signup.php" style="text-decoration: none;">Signup now</a>
         </div>
       </form>
     </div>
