@@ -29,55 +29,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="static/image/favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <title>Admin Login</title>
 </head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-<link rel="stylesheet" href="static/css/style.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+<link rel="stylesheet" href="static/css/style.css"> -->
 
 <body>
-    <header class="header">
-        <!-- Mid box for navbar -->
-        <div class="left">
-            <ul class="navbar">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="member_login.php">Member Login</a></li>
-                <li><a href="member_signup.php">Member Signup</a></li>
-            </ul>
-        </div>
-        <!-- Search -->
-        <div class="right">
-            <form action="search.php" class="d-flex">
-                <input name="query" method="POST" class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search Book">
-                <button class="button btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </header>
 
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Library</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <?php require __DIR__ . '/partials/navbar/_login.php'; ?>
+                    <?php require __DIR__ . '/partials/navbar/_dashboard.php'; ?>
+                    <?php require __DIR__ . '/partials/navbar/_search_member.php'; ?>
+                    <?php require __DIR__ . '/partials/navbar/_logout.php'; ?>
+                </ul>
+                <form class="d-flex" action="search.php" method="GET">
+                    <input required name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-        <h1 class="main-title">Admin Login</h1>
 
-        <?php
-        if ($showError) {
+        <center>
+            <?php
+            if ($showError) {
+                echo ' <div class="myalert-danger" role="alert">
+                <strong>Error! </strong>' . $showError . '
+                </div>';
+            }
+            ?>
+        </center>
 
-            echo '<center>
-                    <div class="myalert-danger" role="alert">
-                        ' . $showError . '
-                    </div>
-                </center>';
-        }
-        ?>
+        <div class="main_div mt-4">
+            <h4>
+                <center><strong>Admin Login</strong></center>
+            </h4>
 
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-            <div class="form-group">
-                <input autofocus type="email" maxlength="30" name="email" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <input type="password" maxlength="255" name="password" placeholder="Password">
-            </div>
-            <center><button class="bottom-center">Login</button></center>
-        </form>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" class="form-control mt-1" maxlength="30" name="email" type="email" autofocus required placeholder="Enter email">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="password">Password</label>
+                    <input id="password" class="form-control mt-1" name="password" type="password" maxlength="255" placeholder="Password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Login</button>
+            </form>
+        </div>
+
     </div>
 </body>
 
