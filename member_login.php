@@ -32,32 +32,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="static/image/favicon.ico">
 
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
-  <link rel="stylesheet" href="static/css/style.css">
+  <!-- <link rel="stylesheet" href="static/css/style.css"> -->
 
   <title>Login</title>
 </head>
 
 <body>
 
-  <!-- <body> -->
-  <header class="header">
-    <!-- Mid box for navbar -->
-    <div class="left">
-      <ul class="navbar">
-        <li><a href="index.php">Home</a></li>
-        <li><a href="member_signup.php">Member Signup</a></li>
-        <li><a href="admin_login.php">Admin Login</a></li>
-      </ul>
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Library</a>
+      <!-- <a class="navbar-brand" href="#"><img src="static/image/logo.png" style="height: 1.31em;" alt="Logo"></a> -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <?php require __DIR__ . '/partials/navbar/_login.php'; ?>
+          <?php require __DIR__ . '/partials/navbar/_dashboard.php'; ?>
+          <?php require __DIR__ . '/partials/navbar/_search_member.php'; ?>
+          <?php require __DIR__ . '/partials/navbar/_logout.php'; ?>
+        </ul>
+        <form class="d-flex" action="search.php" method="GET">
+          <input required name="query" class="form-control me-2" type="search" placeholder="Search by book or author" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
     </div>
-    <!-- Search -->
-    <div class="right">
-      <form action="search.php" class="d-flex">
-        <input name="query" method="POST" class="form-control me-2" type="search" class="round" placeholder="Search" aria-label="Search Book">
-        <button class="button btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </header>
+  </nav>
+
+
   <div class="container">
     <h1 class="main-title">WELCOME TO LIBRARY MANAGEMENT SYSTEM</h1>
 
@@ -73,18 +84,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="main_div">
       <div class="title">Member Login</div>
+
       <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-        <div class="input_box">
-          <input name="email" autofocus maxlength="30" type="email" placeholder="Email" required style="width: 94%;">
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input name="email" id="email" class="form-control" autofocus maxlength="30" type="email" placeholder="Enter email" required style="width: 94%;">
           <div class="icon"><i class="fas fa-user"></i></div>
         </div>
-        <div class="input_box">
-          <input name="password" maxlength="255" type="password" placeholder="Password" required style="width: 94%;">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input name="password" id="password" class="form-control" maxlength="255" type="password" placeholder="Password" required style="width: 94%;">
           <div class="icon"><i class="fas fa-lock"></i></div>
         </div>
-        <div class="input_box button">
-          <input type="submit" value="Login">
-        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+
+        <!-- </div> -->
         <div class="sign_up">
           Not a member? <a href="member_signup.php">Signup now</a>
         </div>
