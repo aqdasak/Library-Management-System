@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/modules/_auth.php';
+require_once __DIR__ . '/modules/_alert.php';
 
 if (session_status() != PHP_SESSION_ACTIVE) {
   session_start();
@@ -17,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header('location: user_dashboard.php');
     exit;
   } else {
-    $showError = '<strong>Invalid credentials</strong>';
+    $showError = true;
+    create_alert('<strong>Invalid credentials</strong>', 'danger');
   }
 }
 
@@ -68,15 +70,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <div class="container">
 
-    <center>
+    <div class="container">
       <?php
       if ($showError) {
-        echo ' <div class="myalert-danger" role="alert">
-        <strong>Error! </strong>' . $showError . '
-        </div>';
+        require __DIR__ . '/partials/_show_alert.php';
       }
       ?>
-    </center>
+    </div>
 
     <div class="main_div mt-4">
       <h4>

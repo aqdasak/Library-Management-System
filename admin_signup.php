@@ -23,10 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             create_alert('New admin account created successfully', 'success');
             header("location: admin_dashboard.php");
         } else {
-            $showError = '<strong>Some error occurred</strong>';
+            $showError = true;
+            create_alert('<strong>Some error occurred</strong>', 'danger');
         }
     } else {
-        $showError = '<strong>Error!</strong> Password don\'t match';
+        $showError = true;
+        create_alert('<strong>Error!</strong> Password don\'t match', 'danger');
     }
 }
 ?>
@@ -76,15 +78,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container">
 
-        <center>
+        <div class="container">
             <?php
             if ($showError) {
-                echo ' <div class="myalert-danger" role="alert">
-        <strong>Error! </strong>' . $showError . '
-        </div>';
+                require __DIR__ . '/partials/_show_alert.php';
             }
             ?>
-        </center>
+        </div>
 
         <div class="main_div mt-4">
             <h4>

@@ -26,12 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('location: user_dashboard.php');
             exit;
         } elseif ($result1) {
-            $showAlert = '<strong>Account created successfully</strong> You can login now!';
+            $showAlert = true;
+            create_alert('<strong>Account created successfully</strong> You can login now!', 'success');
         } else {
-            $showError = '<strong>Some error occurred</strong>';
+            $showError = true;
+            create_alert('<strong>Some error occurred</strong>', 'danger');
         }
     } else {
-        $showError = '<strong>Error!</strong> Password don\'t match';
+        $showError = true;
+        create_alert('<strong>Error!</strong> Password don\'t match', 'danger');
     }
 }
 
@@ -80,20 +83,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container">
 
-        <center>
+        <div class="container">
             <?php
-            if ($showAlert) {
-                echo ' <div class="myalert-success" role="alert">
-                            ' . $showAlert . '
-                       </div>';
-            }
-            if ($showError) {
-                echo ' <div class="myalert-danger" role="alert">
-                           ' . $showError . '
-                        </div>';
+            if ($showError or $showAlert) {
+                require __DIR__ . '/partials/_show_alert.php';
             }
             ?>
-        </center>
+        </div>
 
         <div class="main_div mt-4">
             <h4>

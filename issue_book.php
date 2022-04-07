@@ -37,7 +37,7 @@ if (isset($_POST['book_id'])) {
             header("location: {$redirect}");
             exit();
         } elseif ($verified == 0) {
-            create_alert('Member not verified', 'danger');
+            create_alert('Member is not verified', 'danger');
             header("location: {$redirect}");
             exit();
         } else {
